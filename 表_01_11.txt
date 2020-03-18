@@ -1,0 +1,130 @@
+1、用户表（账号，密码，权限）；
+User(username, password, authority);
+管理员的权限是2，用户的权限是1
+
+2、用户详情表（账号（用户表），地址，真实姓名，手机号，积分）；
+Userdetails (username, address, name,phone, points); 
+
+3、订单表（订单编号，账号（用户表），运费,状态)；1：未发货 2：已发货 3：已收货 4：退货中 5：已退
+Order (oid, username, freight,status);  
+
+4、订单详情表（订单编号，商品编号（商品详情表），数量，发货地址，收货地址);
+Orderdetails ( oid , cid , number，warehouse , destination);
+
+5、商品详情表（商品编号（仓库表），名称，价格，图片，积分，成本价）；
+Commodity(cid, name, price,picture, points,cost);
+
+6、仓库表（仓库编号，商品编号，仓库地址，库存量）；
+Warehouse(wid, cid, address，inventory);   
+
+7.评论表(用户账号, 商品编号, 评分) Grade等级1好评，2中评，3差评
+Comment(username , cid , grade)
+
+8、地址表（用户账号，收获地址，电话，收货人姓名，是否为默认地址）
+Address（username，address，phone，name，default）
+
+9.利润表(商品编号,收入，成本)；
+Profit(pid , income, cost);
+
+10.购物车表(账号,商品编号,数量,价格)
+
+drop database onlineshop;
+create database OnlineShop;
+use OnlineShop
+
+create table User
+(
+username varchar(20) not null primary key,
+password varchar(20) not null,
+authority int not null
+);
+
+
+create table Userdetails
+(
+username varchar(20) not null primary key, 
+name varchar(20) not null,
+phone varchar(20) not null,
+points int
+);
+
+
+create table Orders
+(
+oid int primary key auto_increment,
+username varchar(20) not null ,
+freight int,
+status int
+);
+
+
+create table Orderdetails
+(
+oid Int,
+cid int,
+number int,
+wid int,
+aid int,
+primary key(oid,cid)
+);
+
+
+create table Commodity
+(
+cid int primary key auto_increment,
+name varchar(100) not null,
+picture varchar(255),
+price int,
+points int,
+cost int
+);
+
+
+create table Warehouse
+(
+wid int,
+cid int,
+address varchar(100) not null,
+inventory int,
+primary key(wid,cid)
+);
+
+
+create table Comment
+(
+username varchar(20) not null, 
+cid int not null,
+grade int,
+primary key(username,cid)
+);
+
+
+create table Addresses
+(
+aid int primary key auto_increment,
+username  varchar(20),
+address  varchar(100),
+phone varchar(20),
+name varchar(20),
+defaultadress int
+);
+
+
+create table Profit
+(
+cid int primary key,
+income int,
+cost int
+); 
+
+
+create table cart
+(
+username varchar(20),
+cid int,
+name varchar(255),
+price int,
+sum int,
+money int,
+primary key(username,cid)
+);
